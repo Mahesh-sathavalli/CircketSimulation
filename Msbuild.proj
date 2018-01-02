@@ -1,0 +1,24 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="12">
+
+	<ItemGroup>
+	 <FilesToCompile Include="*.cs" />
+	 <FilesToCompile Include="Properties\*.cs" />
+	</ItemGroup>
+	<PropertyGroup>
+	 <OutputDir>bin\debug</OutputDir>
+	 <OutputAssembly>$(OutputDir)\simulation.exe</OutputAssembly>
+	 <Optimize>false</Optimize>
+	</PropertyGroup>
+
+	<Target Name="Build">
+	 <Message Text="build MSbuild project file from scratch" />
+	 <MakeDir Directories="$(OutputDir)"/>
+	 <GenerateResource Sources="@(ResourceFiles)">
+		<Output TaskParameter="OutputResources" ItemName="CompiledResources"/>
+	 </GenerateResource>
+	 <Csc Sources="@(FilesToCompile)" OutputAssembly="$(OutputAssembly)"
+		Optimize="$(Optimize)" TargetType="exe"
+
+		Resources="@(CompiledResources)"/>
+ </Target>
+</Project>

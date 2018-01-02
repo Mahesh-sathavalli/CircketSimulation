@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Timers;
 namespace CricketSimulation
 {
-    class Match
+    public class Match
     {
         private const int BallsPerOver = 6;
 
@@ -28,14 +28,14 @@ namespace CricketSimulation
             pauseGame = new Timer();
         }
 
-        public void ConductMatch()
+        public bool ConductMatch()
         {
             Player firstPlayer = ScoreCard.Players[0];
             Player secondPlayer = ScoreCard.Players[1];
             firstPlayer.IsBattingNow = true;
             firstPlayer.IsplayingCurrently = true;
             secondPlayer.IsplayingCurrently = true;
-            Result result;
+            Result result = Result.Continue;
             for (int i = 0; i < overslimit; i++)
             {
                 result = ConductOver(ref firstPlayer, ref secondPlayer);
@@ -56,11 +56,11 @@ namespace CricketSimulation
                
                 ChangeStrikeAfterOver(ref firstPlayer, ref secondPlayer,Overs[Overs.Count-1]);
             }
-            if(ScoreCard.OversLeft == 0 && ScoreCard.RunsScored < ScoreCard.Target)
+            if(ScoreCard.OversLeft == 0 && ScoreCard.RunsScored < ScoreCard.Target && result != Result.Allout)
             {
                 scoreDisplay.CommentaryBymatchifLost(ScoreCard, Overs);
             }
-
+            return true;
         }
 
         private void ChangeStrikeAfterOver(ref Player firstPlayer, ref Player secondPlayer, Over over)
@@ -79,9 +79,9 @@ namespace CricketSimulation
             {
                 System.Threading.Thread.Sleep(1000);
                 Ball newBall = new Ball(striker.Name);
-                newBall.Bowl();
-                striker.UpdatePlayerScore(newBall);
-                over.UpdateOverScoreAddBall(newBall);
+                over.Bowler.Bowl(ref striker, newBall);
+                striker.updateScore(newBall);
+                over.updateScore(newBall);
                 
                 if (!newBall.IsWicket)
                 {
@@ -89,7 +89,7 @@ namespace CricketSimulation
                 }else
                 { 
                     ScoreCard.updateScore(newBall);
-                    striker.isOutorNot = true;
+                    
                 }
                 if (over.ControlPlayerBetweenWickets(newBall))
                 {
@@ -128,7 +128,7 @@ namespace CricketSimulation
         public static void Main()
         {
             Match match = new Match();
-            match.ConductMatch();
+            bool result = match.ConductMatch();
             Console.ReadLine();
         }
     }

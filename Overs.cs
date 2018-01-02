@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CircketSimulation;
 
 namespace CricketSimulation
 {
-    class Over
+    public class Over : ScoreUpdate
     {
+        public Bowler Bowler { get; set; }
         public List<Ball> Balls { get; set; }
         public int RunScored { get; set; }
         public int overNumber { get; set; }
         public Over()
         {
+            this.Bowler = new Bowler();
             Balls = new List<Ball>();
             RunScored = 0;
             overNumber = 0;
@@ -30,10 +33,11 @@ namespace CricketSimulation
             }
 
         }
-        public void UpdateOverScoreAddBall(Ball currentBall)
+
+        public void updateScore(Ball currentBall)
         {
             Balls.Add(currentBall);
-            RunScored = RunScored + currentBall.RunsScored;   
+            RunScored = RunScored + currentBall.RunsScored;
         }
     }
 }

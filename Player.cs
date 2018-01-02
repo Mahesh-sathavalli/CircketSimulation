@@ -3,36 +3,101 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CircketSimulation;
 
 namespace CricketSimulation
 {
-    class Player
+    public class Player : ScoreUpdate
     {
         private string _Name;
-
         public string Name
         {
             get { return _Name; }
         }
 
-        public int RunScored { get; set; }
-        public bool isOutorNot { get; set; }
-        public int BallsPlayed { get; set; }
+        private int _RunScored;
+        public int RunScored
+        {
+            get { return _RunScored; }   
+        }
+
+        private bool _isOutorNot;
+        public bool isOutorNot
+        {
+            get { return _isOutorNot; }
+        }
+
+        private int _BallsPlayed;
+        public int BallsPlayed
+        {
+            get { return _BallsPlayed; }
+        }
+       
         public bool IsplayingCurrently { get; set; }
         public bool IsBattingNow { get; set; }
         public Player(string name)
         {
             _Name = name;
-            RunScored = 0;
-            isOutorNot = false;
-            BallsPlayed = 0;
+            _RunScored = 0;
+            _isOutorNot = false;
+            _BallsPlayed = 0;
         }
 
-        public void UpdatePlayerScore(Ball currentBall)
+        public void updateScore(Ball currentBall)
         {
-            RunScored = RunScored + currentBall.RunsScored;
-            isOutorNot = currentBall.IsWicket;
-            BallsPlayed++;
+            _RunScored = _RunScored + currentBall.RunsScored;
+            _isOutorNot = currentBall.IsWicket;
+            _BallsPlayed++;
+        }
+
+        public void PlayBall(Ball ball)
+        {
+            Random rand = new Random();
+            double score = rand.NextDouble();
+            List<double> playerBattionProbality = ProbabilityTable.table[this.Name];
+            List<double> cumulativeProbalityList = new List<double>();
+            for (int i = 0; i < playerBattionProbality.Count; i++)
+            {
+                double Cumulative = 0;
+                for (int j = 0; j <= i; j++)
+                {
+                    Cumulative = Cumulative + playerBattionProbality[j];
+                }
+                cumulativeProbalityList.Add(Cumulative);
+            }
+            if (score < cumulativeProbalityList[0])
+            {
+                ball.updateScore(0);
+            }
+            else if (score >= cumulativeProbalityList[0] && score < cumulativeProbalityList[1])
+            {
+                ball.updateScore(1);
+            }
+            else if (score >= cumulativeProbalityList[1] && score < cumulativeProbalityList[2])
+            {
+                ball.updateScore(2);
+            }
+            else if (score >= cumulativeProbalityList[2] && score < cumulativeProbalityList[3])
+            {
+                ball.updateScore(3);
+            }
+            else if (score >= cumulativeProbalityList[3] && score < cumulativeProbalityList[4])
+            {
+                ball.updateScore(4);
+            }
+            else if (score >= cumulativeProbalityList[4] && score < cumulativeProbalityList[5])
+            {
+                ball.updateScore(5);
+            }
+            else if (score >= cumulativeProbalityList[5] && score < cumulativeProbalityList[6])
+            {
+                ball.updateScore(6);
+            }
+            else
+            {
+                ball.updateScore(0, true);
+                return;
+            }
         }
     }
 }

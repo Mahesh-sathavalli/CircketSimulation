@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CircketSimulation;
 
 namespace CricketSimulation
 {
-    class ScoreCard
+    public class ScoreCard : ScoreUpdate
     {
         private int myVar;
 

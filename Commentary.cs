@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace CricketSimulation
 {
-    class Commentary
+    public class Commentary
     {
         private const int _OversMatch = 4;
+        public string printMessage;
         public void commentarybyBall(Ball ball,Over over)
         {
             int overNumber = over.overNumber;
@@ -18,16 +19,22 @@ namespace CricketSimulation
             string runsScoredPlural = runScored == 1 || runScored == 0 ? runScored.ToString() + " run" : runScored.ToString() + " runs";
             if(ball.IsWicket)
             {
-                Console.WriteLine("{0}.{1} Its a Wicket !!! {2} got out ", overNumber, ballNumber, player);
-            }else
-                Console.WriteLine("{0}.{1} {2} scores {3}",overNumber,ballNumber,player, runsScoredPlural);
+                printMessage = string.Format("{0}.{1} Its a Wicket !!! {2} got out ", overNumber, ballNumber, player);
+                Console.WriteLine(printMessage);
+            }
+            else
+            {
+                printMessage = string.Format("{0}.{1} {2} scores {3}", overNumber, ballNumber, player, runsScoredPlural);
+               Console.WriteLine(printMessage);
+            }
+                
         }
         public void CommentaryBymatchifWon(ScoreCard score,List<Over> overs)
         {
             int remainingBalls = (_OversMatch * 6) - GetNumberofBallsRemaining(overs);
-            Console.WriteLine("Lengaburu won by {0} and {1} remaining",TakecareofPlurals(score.WicketsLeft, "wickets"),TakecareofPlurals(remainingBalls,"balls"));
+            printMessage = string.Format("Lengaburu won by {0} and {1} remaining", TakecareofPlurals(score.WicketsLeft, "wickets"), TakecareofPlurals(remainingBalls, "balls"));
+            Console.WriteLine(printMessage);
             DisplayPlayerScores(score.Players);
-           
         }
 
         private int GetNumberofBallsRemaining(List<Over> overs)
@@ -66,7 +73,8 @@ namespace CricketSimulation
         
         public void CommentaryBymatchifLost(ScoreCard score,List<Over> overs)
         {
-            Console.WriteLine("Lengburu lost by {0}",TakecareofPlurals(score.RequiredRuns-1,"run"));
+            printMessage = string.Format("Lengburu lost by {0}", TakecareofPlurals(score.RequiredRuns - 1, "run"));
+            Console.WriteLine(printMessage);
             DisplayPlayerScores(score.Players);
         }
         public void CommentaryAfterWicket(Player player)
@@ -74,9 +82,10 @@ namespace CricketSimulation
             string Name = player.Name;
             int runsScored = player.RunScored;
             int ballsPlayed = player.BallsPlayed;
-            Console.WriteLine("{0} {1}({2})",Name,runsScored,ballsPlayed);
+            printMessage = string.Format("{0} {1}({2})", Name, runsScored, ballsPlayed);
+            Console.WriteLine(printMessage);
         }
-        internal void CommentarybyOver(ScoreCard scoreCard, List<Over> over)
+        public void CommentarybyOver(ScoreCard scoreCard, List<Over> over)
         {
             Console.WriteLine("After completion of over {0}. The score is {1}",over.Count,scoreCard.RunsScored);
             Console.WriteLine("Tagert {0}, Runs Required {1}, Remaining balls {2}",scoreCard.Target,scoreCard.RequiredRuns,(scoreCard.OversLeft ) * 6);
