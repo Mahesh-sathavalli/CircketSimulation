@@ -3,3 +3,4 @@ C:\Users\mnagaraja\Documents\Visual Studio 2015\Projects\CircketSimulation\Circk
 C:\Users\mnagaraja\Documents\Visual Studio 2015\Projects\CircketSimulation\CircketSimulation\bin\Release\CircketSimulation.pdb
 C:\Users\mnagaraja\Documents\Visual Studio 2015\Projects\CircketSimulation\CircketSimulation\obj\Release\CircketSimulation.exe
 C:\Users\mnagaraja\Documents\Visual Studio 2015\Projects\CircketSimulation\CircketSimulation\obj\Release\CircketSimulation.pdb
+C:\Users\mnagaraja\Documents\Visual Studio 2015\Projects\CircketSimulation\CircketSimulation\obj\Release\CircketSimulation.csprojResolveAssemblyReference.cache

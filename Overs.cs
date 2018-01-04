@@ -9,6 +9,7 @@ namespace CricketSimulation
 {
     public class Over : ScoreUpdate
     {
+        private const int OddNumberScored = 1;
         public Bowler Bowler { get; set; }
         public List<Ball> Balls { get; set; }
         public int RunScored { get; set; }
@@ -23,7 +24,7 @@ namespace CricketSimulation
         public bool ControlPlayerBetweenWickets(Ball newball)
         {
             Ball latestBall = newball;
-            if(latestBall.RunsScored == 1 || latestBall.RunsScored == 3 || latestBall.RunsScored == 5)
+            if(latestBall.RunsScored % 2 == OddNumberScored)
             {
                 return true;
             }
