@@ -14,7 +14,7 @@ namespace CricketSimulation
         public ScoreCard ScoreCard { get; set; }
         public List<Over> Overs { get; set; }
         public Commentary scoreDisplay { get; set; }
-        private Timer pauseGame;
+        
         public Match()
         {
             List<Player> players = new List<Player>();
@@ -25,7 +25,6 @@ namespace CricketSimulation
             ScoreCard = new ScoreCard(overslimit, 40, 3, 0, players);
             Overs = new List<Over>();
             scoreDisplay = new Commentary();
-            pauseGame = new Timer();
         }
 
         public bool ConductMatch()

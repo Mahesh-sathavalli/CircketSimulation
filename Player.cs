@@ -54,14 +54,14 @@ namespace CricketSimulation
         {
             Random rand = new Random();
             double score = rand.NextDouble();
-            List<double> playerBattionProbality = ProbabilityTable.table[this.Name];
+            List<double> playerBattingProbality = ProbabilityTable.table[this.Name];
             List<double> cumulativeProbalityList = new List<double>();
-            for (int i = 0; i < playerBattionProbality.Count; i++)
+            for (int i = 0; i < playerBattingProbality.Count; i++)
             {
                 double Cumulative = 0;
                 for (int j = 0; j <= i; j++)
                 {
-                    Cumulative = Cumulative + playerBattionProbality[j];
+                    Cumulative = Cumulative + playerBattingProbality[j];
                 }
                 cumulativeProbalityList.Add(Cumulative);
             }

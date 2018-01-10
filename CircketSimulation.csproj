@@ -54,6 +54,7 @@
     <Compile Include="Result.cs" />
     <Compile Include="ScoreCard.cs" />
     <Compile Include="ScoreUpdate.cs" />
+    <Compile Include="Team.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
