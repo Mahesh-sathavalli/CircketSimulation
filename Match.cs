@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using CircketSimulation;
+
 namespace CricketSimulation
 {
     public class Match
@@ -14,23 +16,22 @@ namespace CricketSimulation
         public ScoreCard ScoreCard { get; set; }
         public List<Over> Overs { get; set; }
         public Commentary scoreDisplay { get; set; }
-        
+        public Team team { get; set; }
         public Match()
         {
-            List<Player> players = new List<Player>();
-            players.Add(new Player("Kirat Boli"));
-            players.Add(new Player("N.S  Nodhi"));
-            players.Add(new Player("R Rumarah"));
-            players.Add(new Player("Shashi Henra"));
-            ScoreCard = new ScoreCard(overslimit, 40, 3, 0, players);
+            List<Team> teams = new List<Team>();
+            team = new Team("Lengaburu");
+            teams.Add(team);
+            ScoreCard = new ScoreCard(overslimit, 40, 3, 0, team.Players);
+            ScoreCard = new ScoreCard(overslimit, 40, 3, 0, teams);
             Overs = new List<Over>();
             scoreDisplay = new Commentary();
         }
 
         public bool ConductMatch()
         {
-            Player firstPlayer = ScoreCard.Players[0];
-            Player secondPlayer = ScoreCard.Players[1];
+            Player firstPlayer = ScoreCard.Teams[0].Players[0];
+            Player secondPlayer = ScoreCard.Teams[0].Players[1];
             firstPlayer.IsBattingNow = true;
             firstPlayer.IsplayingCurrently = true;
             secondPlayer.IsplayingCurrently = true;
@@ -49,6 +50,9 @@ namespace CricketSimulation
                     else if(result == Result.Allout)
                     {
                         scoreDisplay.CommentaryBymatchifLost(ScoreCard, Overs);
+                    }else if(result == Result.MatchTied)
+                    {
+
                     }
                     break;
                 }
@@ -103,8 +107,10 @@ namespace CricketSimulation
                         striker.IsplayingCurrently = true;
                 }
                 
-                if (ScoreCard.RunsScored >= ScoreCard.Target)
+                if (ScoreCard.RunsScored > ScoreCard.Target)
                     return Result.Won;
+                if (ScoreCard.RunsScored == ScoreCard.Target && over.overNumber == overslimit && i == BallsPerOver)
+                    return Result.MatchTied;
                 if (ScoreCard.WicketsLeft == 0)
                     return Result.Allout;
 
@@ -114,7 +120,7 @@ namespace CricketSimulation
 
         private Player GetTheNextPlayer()
         {
-            return ScoreCard.Players.Where(x => x.IsplayingCurrently == false).FirstOrDefault();
+            return ScoreCard.Teams[0].Players.Where(x => x.IsplayingCurrently == false).FirstOrDefault();
         }
 
         private void SwapPlayers(ref Player striker, ref Player runner)

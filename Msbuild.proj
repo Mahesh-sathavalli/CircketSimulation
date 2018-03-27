@@ -18,7 +18,26 @@
 	 </GenerateResource>
 	 <Csc Sources="@(FilesToCompile)" OutputAssembly="$(OutputAssembly)"
 		Optimize="$(Optimize)" TargetType="exe"
-
 		Resources="@(CompiledResources)"/>
  </Target>
+ <Target Name="AfterBuild">
+        <ItemGroup>
+            <TestAssemblies Include="$(MSBuildProjectDirectory)\**\bin\$(Configuration)\*Test.dll"/>
+        </ItemGroup>
+
+        <PropertyGroup>
+            <MsTestCommand>"$(MsTestExePath)" @(TestAssemblies->'/testcontainer:"%(FullPath)"', ' ') /resultsfile:"TestResults\Results.trx""</MsTestCommand>
+        </PropertyGroup>
+
+        <Message Text="MsTestCommand: @(TestAssemblies->'/testcontainer:$(DoubleQuotes)%(FullPath)$(DoubleQuotes)', ' ')"
+                 Importance="high"/>
+
+        <RemoveDir Directories="TestResults"
+                   Condition="Exists('TestResults')" />
+        <MakeDir Directories="TestResults" />
+
+        <Exec Command="$(MsTestCommand)"
+              ContinueOnError="true" />
+    </Target>
+
 </Project>

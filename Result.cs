@@ -11,6 +11,7 @@ namespace CricketSimulation
         Continue =0,
         Won =1,
         Allout =2,
-        OversCompleted =3
+        OversCompleted =3,
+        MatchTied = 4
     }
 }

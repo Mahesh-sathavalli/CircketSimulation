@@ -34,7 +34,8 @@ namespace CricketSimulation
             int remainingBalls = (_OversMatch * 6) - GetNumberofBallsRemaining(overs);
             printMessage = string.Format("Lengaburu won by {0} and {1} remaining", TakecareofPlurals(score.WicketsLeft, "wickets"), TakecareofPlurals(remainingBalls, "balls"));
             Console.WriteLine(printMessage);
-            DisplayPlayerScores(score.Players);
+            if(score.Teams != null)
+                  DisplayPlayerScores(score.Teams[0].Players);
         }
 
         private int GetNumberofBallsRemaining(List<Over> overs)
@@ -75,7 +76,20 @@ namespace CricketSimulation
         {
             printMessage = string.Format("Lengburu lost by {0}", TakecareofPlurals(score.RequiredRuns - 1, "run"));
             Console.WriteLine(printMessage);
-            DisplayPlayerScores(score.Players);
+            if(score.Teams != null)
+            {
+                DisplayPlayerScores(score.Teams[0].Players);
+            }
+            
+        }
+        public void CommentaryBymatchIfTied(ScoreCard score,List<Over> overs)
+        {
+            printMessage = string.Format("Match is Tied.Score is {0}", TakecareofPlurals(score.RunsScored, "run"));
+            Console.WriteLine(printMessage);
+            if (score.Teams != null)
+            {
+                DisplayPlayerScores(score.Teams[0].Players);
+            }
         }
         public void CommentaryAfterWicket(Player player)
         {
@@ -88,7 +102,7 @@ namespace CricketSimulation
         public void CommentarybyOver(ScoreCard scoreCard, List<Over> over)
         {
             Console.WriteLine("After completion of over {0}. The score is {1}",over.Count,scoreCard.RunsScored);
-            Console.WriteLine("Tagert {0}, Runs Required {1}, Remaining balls {2}",scoreCard.Target,scoreCard.RequiredRuns,(scoreCard.OversLeft ) * 6);
+            Console.WriteLine("Tagert {0}, Runs Required {1}, Remaining balls {2}",scoreCard.Target,scoreCard.RequiredRuns, (_OversMatch * 6) - GetNumberofBallsRemaining(over));
             Console.WriteLine("------------------------------------");
         }
     }

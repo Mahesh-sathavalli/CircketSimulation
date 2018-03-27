@@ -49,6 +49,7 @@
     <Compile Include="Match.cs" />
     <Compile Include="Overs.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerList.cs" />
     <Compile Include="ProbabilityTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs" />

@@ -23,6 +23,7 @@ namespace CricketSimulation
         public int RunsScored { get; set; }
         public List<Player> Players { get; set; }
         public int RequiredRuns { get; set; }
+        public List<Team> Teams { get; set; }
         public ScoreCard(int oversLeft,int target,int wicketsleft,int runsScored, List<Player> players)
         {
             OversLeft = oversLeft;
@@ -30,6 +31,15 @@ namespace CricketSimulation
             WicketsLeft = wicketsleft;
             RunsScored = runsScored;
             Players = players;
+            RequiredRuns = Target - RunsScored;
+        }
+        public ScoreCard(int oversLeft, int target, int wicketsleft, int runsScored, List<Team> teams)
+        {
+            OversLeft = oversLeft;
+            Target = target;
+            WicketsLeft = wicketsleft;
+            RunsScored = runsScored;
+            Teams = teams;
             RequiredRuns = Target - RunsScored;
         }
 

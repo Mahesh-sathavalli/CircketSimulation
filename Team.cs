@@ -7,7 +7,7 @@ using CricketSimulation;
 
 namespace CircketSimulation
 {
-    class Team
+    public class Team
     {
         private string _TeamName;
 
@@ -23,12 +23,13 @@ namespace CircketSimulation
             get { return _players; }
             set { _players = value; }
         }
-        public int RunsScored { get; set; }
+        
         
         public Team(string Name)
         {
             Players = new List<Player>();
             Players.AddRange(PlayerList.ListOfPlayers["Lengaburu"]);
+            TeamName = Name;
         }
 
 
